@@ -1009,6 +1009,12 @@ public:
                     room->broadcastSkillInvoke(objectName());
                     QString choice = room->askForChoice(p, objectName(), "haveslash+noslash", QVariant::fromValue(p));
                     bool guess = (choice == "haveslash");
+
+                    LogMessage log;
+                    log.from = p;
+                    log.type = guess ? "#MangzhiSlash" : "#MangzhiNoSlash";
+                    room->sendLog(log);
+
                     bool have = false;
                     if (!player->isKongcheng()){
                         room->showAllCards(player);

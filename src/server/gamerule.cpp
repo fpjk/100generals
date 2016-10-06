@@ -407,9 +407,11 @@ bool GameRule::trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *play
             foreach (ServerPlayer *player, room->getOtherPlayers(damage.to)) {
                 if (damage.damage >= damage.to->getHp() && player->getMark("@yuan")==0 && room->askForSkillInvoke(player, "jiuzhu", "yes")){
                     room->setPlayerMark(player, "@yuan", 1);
+                    room->setEmotion(player, "jiuzhu");
                     room->loseHp(player);
                     --damage.damage;
                     data = QVariant::fromValue(damage);
+                    room->setEmotion(damage.to, "jiuzhu2");
                     if (damage.damage < 1)
                         return true;
                 }
