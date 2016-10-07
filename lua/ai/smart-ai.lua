@@ -3195,7 +3195,7 @@ function sgs.ai_skill_cardask.nullfilter(self, data, pattern, target)
 
 	if target and sgs.ai_role[target:objectName()] == "rebel" and self.role == "rebel" and self.player:hasFlag("AI_doNotSave") then return "." end
 	if target and self:needDeath() then return "." end
-	if self:needBear() and self.player:getHp() > 2 then return "." end
+	--if self:needBear() and self.player:getHp() > 2 then return "." end
 	if self.player:hasSkill("zili") and not self.player:hasSkill("paiyi") and self.player:getLostHp() < 2 then return "." end
 	if self.player:hasSkill("wumou") and self.player:getMark("@wrath") < 7 and self.player:getHp() > 2 then return "." end
 	if self.player:hasSkill("tianxiang") then
@@ -5250,7 +5250,7 @@ end
 function SmartAI:useBasicCard(card, use)
 	if not card then global_room:writeToConsole(debug.traceback()) return end
 	if self.player:hasSkill("ytchengxiang") and self.player:getHandcardNum() < 8 and card:getNumber() < 7 then return end
-	if not (card:isKindOf("Peach") and self.player:getLostHp() > 1) and self:needBear() then return end
+	--if not (card:isKindOf("Peach") and self.player:getLostHp() > 1) and self:needBear() then return end
 	if self:needRende() then return end
 	self:useCardByClassName(card, use)
 end
@@ -5707,7 +5707,7 @@ end
 function SmartAI:useTrickCard(card, use)
 	if not card then global_room:writeToConsole(debug.traceback()) return end
 	if self.player:hasSkill("ytchengxiang") and self.player:getHandcardNum() < 8 and card:getNumber() < 7 then return end
-	if self:needBear() and not ("amazing_grace|ex_nihilo|snatch|iron_chain|collateral"):match(card:objectName()) then return end
+	--if self:needBear() and not ("amazing_grace|ex_nihilo|snatch|iron_chain|collateral"):match(card:objectName()) then return end
 	if self.player:hasSkill("wumou") and self.player:getMark("@wrath") < 7 then
 		if not (card:isKindOf("AOE") or card:isKindOf("DelayedTrick") or card:isKindOf("IronChain") or card:isKindOf("Drowning"))
 			and not (card:isKindOf("Duel") and self.player:getMark("@wrath") > 0) then return end
@@ -5910,7 +5910,7 @@ function SmartAI:useEquipCard(card, use)
 	self:useCardByClassName(card, use)
 	if use.card then return end
 	if card:isKindOf("Weapon") then
-		if self:needBear() then return end
+		--if self:needBear() then return end
 		if self.player:hasSkill("jiehuo") and self.player:getMark("jiehuo") < 0 and card:isRed() then return end
 		if self.player:hasSkill("zhulou") and same then return end
 		if self.player:hasSkill("taichen") and same then
@@ -5939,7 +5939,7 @@ function SmartAI:useEquipCard(card, use)
 			use.card = card
 		end
 	elseif card:isKindOf("Armor") then
-		if self:needBear() and self.player:getLostHp() == 0 then return end
+		--if self:needBear() and self.player:getLostHp() == 0 then return end
 		local lion = self:getCard("SilverLion")
 		if lion and self.player:isWounded() and not self.player:hasArmorEffect("silver_lion") and not card:isKindOf("SilverLion")
 			and not (self:hasSkills("bazhen|yizhong") and not self.player:getArmor()) then
@@ -5953,7 +5953,7 @@ function SmartAI:useEquipCard(card, use)
 		end
 		if self:evaluateArmor(card) > self:evaluateArmor() or isenemy_zzzh and self:getOverflow() > 0 then use.card = card end
 		return
-	elseif self:needBear() then return
+	--elseif self:needBear() then return
 	elseif card:isKindOf("OffensiveHorse") then
 		if self.player:hasSkill("jiehuo") and self.player:getMark("jiehuo") < 0 and card:isRed() then return end
 		if (self.player:hasSkill("nosrende") or (self.player:hasSkill("rende") and not self.player:hasUsed("RendeCard"))) then

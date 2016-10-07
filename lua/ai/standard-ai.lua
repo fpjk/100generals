@@ -11,6 +11,8 @@ sgs.ai_skill_choice.jianxiong = function(self, choices, data)
 	return "obtain"
 end
 
+sgs.ai_skill_invoke.baye = true
+
 table.insert(sgs.ai_global_flags, "hujiasource")
 
 sgs.ai_skill_invoke.hujia = function(self, data)
@@ -89,25 +91,48 @@ sgs.ai_skill_cardask["@hujia-jink"] = function(self)
 	return self:getCardId("Jink") or "."
 end
 
-sgs.ai_skill_invoke.fankui = function(self, data)
-	local target = data:toPlayer()
-	if sgs.ai_need_damaged.fankui(self, target, self.player) then return true end
-
-	if self:isFriend(target) then
-		if self:getOverflow(target) > 2 then return true end
-		if self:doNotDiscard(target) then return true end
-		return (self:hasSkills(sgs.lose_equip_skill, target) and not target:getEquips():isEmpty())
-		  or (self:needToThrowArmor(target) and target:getArmor()) or self:doNotDiscard(target)
-	end
-	if self:isEnemy(target) then
-		if self:doNotDiscard(target) then return false end
-		return true
-	end
-	--self:updateLoyalty(-0.8*sgs.ai_loyalty[target:objectName()],self.player:objectName())
-	return true
+sgs.ai_skill_playerchosen.yangshi = function(self, targets)
+    local target = targets:first()
+    local target2 = nil
+    if targets.length() == 2 then
+        target2 = targets:last()
+    end
+    if sgs.ai_need_damaged.yangshi(self, target, self.player) then return target end
+    if target2 and sgs.ai_need_damaged.yangshi(self, target2, self.player) then return target2 end
+    if self:isFriend(target) then
+        if target2 then
+            if self:isEnemy(target2) then
+                if not self:doNotDiscard(target2) then return target2 end
+            end
+            if (self:needToThrowArmor(target2) and target:getArmor2()) then return target2 end 
+            if self:getOverflow(target2) > 2 then return target2 end
+            if self:doNotDiscard(target2) then return target2 end
+            if (self:hasSkills(sgs.lose_equip_skill, target) and not target:getEquips():isEmpty()) then return target2 end
+        end
+        if self:getOverflow(target) > 2 then return target end
+        if self:doNotDiscard(target) then return target end
+        if (self:hasSkills(sgs.lose_equip_skill, target) and not target:getEquips():isEmpty()) then return target end
+        if (self:needToThrowArmor(target) and target:getArmor()) then return target end
+        return nil 
+    end 
+    if self:isEnemy(target) then
+        if self:doNotDiscard(target) and target2 then
+            if self:isEnemy(target2) then
+                if not self:doNotDiscard(target2) then return target2 end
+                return nil
+            end
+            if (self:needToThrowArmor(target2) and target:getArmor2()) then return target2 end 
+            if self:getOverflow(target2) > 2 then return target2 end
+            if self:doNotDiscard(target2) then return target2 end
+            if (self:hasSkills(sgs.lose_equip_skill, target) and not target:getEquips():isEmpty()) then return target2 end
+        end
+        return target
+    end
+    --self:updateLoyalty(-0.8*sgs.ai_loyalty[target:objectName()],self.player:objectName())
+    return target
 end
 
-sgs.ai_choicemade_filter.cardChosen.fankui = function(self, player, promptlist)
+sgs.ai_choicemade_filter.cardChosen.yangshi = function(self, player, promptlist)
 	local damage = self.room:getTag("CurrentDamageStruct"):toDamage()
 	if damage.from then
 		local intention = 10
@@ -144,8 +169,7 @@ sgs.ai_skill_cardchosen.fankui = function(self, who, flags)
 	return nil
 end
 
-
-sgs.ai_need_damaged.fankui = function (self, attacker, player)
+sgs.ai_need_damaged.yangshi = function (self, attacker, player)
 	if not player:hasSkill("guicai+fankui") then return false end
 	if not attacker then return end
 	local need_retrial = function(target)
@@ -205,6 +229,23 @@ sgs.ai_need_damaged.fankui = function (self, attacker, player)
 	return false
 end
 
+sgs.ai_skill_playerchosen.yangshigive = function(self, targets)
+    if (self:getHandcardNum() <= 2 or self:getHp() < 2) and not self:needKongcheng(self, true)then return nil end
+	for _, player in sgs.qlist(targets) do
+		if (player:getHandcardNum() <= 2 or player:getHp() < 2) and self:isFriend(player)
+			and not self:needKongcheng(player, true)then
+			return player
+		end
+	end
+    if not self:needKongcheng(self, true)then return nil end
+	for _, player in sgs.qlist(targets) do
+		if self:isFriend(player)
+			and not self:needKongcheng(player, true) then
+			return player
+		end
+	end
+    return nil
+end
 
 sgs.ai_skill_cardask["@guicai-card"]=function(self, data)
 	local judge = data:toJudge()

@@ -452,7 +452,6 @@ function SmartAI:isPriorFriendOfSlash(friend, card, source)
 				or (friend:isLord() and source:hasSkill("guagu") and friend:getLostHp() >= 1 and getCardsNum("Jink", friend, source) == 0)
 				or (friend:hasSkill("jieming") and source:hasSkill("nosrende") and (huatuo and self:isFriend(huatuo, source)))
 				or (friend:hasSkill("hunzi") and friend:getHp() == 2 and self:getDamagedEffects(friend, source)))
-				or self:hasNosQiuyuanEffect(source, friend)
 				then
 		return true
 	end
@@ -523,7 +522,7 @@ function SmartAI:useCardSlash(card, use)
 	self:sort(self.enemies, "defenseSlash")
 	for _, enemy in ipairs(self.enemies) do
 		if not self:slashProhibit(card, enemy) and sgs.isGoodTarget(enemy, self.enemies, self, true) then
-			if self:hasNosQiuyuanEffect(self.player, enemy) or self:hasQiuyuanEffect(self.player, enemy) then table.insert(forbidden, enemy)
+			if self:hasQiuyuanEffect(self.player, enemy) then table.insert(forbidden, enemy)
 			elseif not self:getDamagedEffects(enemy, self.player, true) then table.insert(targets, enemy)
 			else table.insert(forbidden, enemy) end
 		end
@@ -1169,7 +1168,7 @@ sgs.ai_skill_cardask["double-sword-card"] = function(self, data, pattern, target
 		end
 	end
 	if target and self:isFriend(target) then return "." end
-	if self:needBear() then return "." end
+	--if self:needBear() then return "." end
 	if target and self:needKongcheng(target, true) then return "." end
 	local cards = self.player:getHandcards()
 	for _, card in sgs.qlist(cards) do
@@ -2861,7 +2860,7 @@ function SmartAI:useCardIndulgence(card, use)
 		if enemy:hasSkills("lirang|longluo") then value = value - 5 end
 		if enemy:hasSkills("tuxi|noszhenlie|guanxing|qinyin|zongshi|tiandu") then value = value - 3 end
 		if enemy:hasSkill("conghui") then value = value - 20 end
-		if self:needBear(enemy) then value = value - 20 end
+		--if self:needBear(enemy) then value = value - 20 end
 		if not sgs.isGoodTarget(enemy, self.enemies, self) then value = value - 1 end
 		if getKnownCard(enemy, self.player, "Dismantlement", true) > 0 then value = value + 2 end
 		value = value + (self.room:alivePlayerCount() - self:playerGetRound(enemy)) / 2
