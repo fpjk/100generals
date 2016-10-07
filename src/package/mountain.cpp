@@ -150,7 +150,7 @@ public:
 
             QString discard_prompt = QString("#qiaobian-%1").arg(index);
             QString use_prompt = QString("@qiaobian-%1").arg(index);
-            if (index > 0 && zhanghe->askForSkillInvoke(this)) {
+            if (index > 0 && !zhanghe->isKongcheng() && zhanghe->askForSkillInvoke(this)) {
                 room->broadcastSkillInvoke("qiaobian", index);
                 JudgeStruct judge;
                 judge.pattern = ".|heart";
@@ -164,11 +164,10 @@ public:
                     room->broadcastSkillInvoke("qiaobian", 5);
                     return false;
                 }
-                if (room->askForDiscard(zhanghe, objectName(), 1, 1, true, false, discard_prompt)) {
-                    if (!zhanghe->isSkipped(change.to) && (index == 2 || index == 3))
-                        room->askForUseCard(zhanghe, "@@qiaobian", use_prompt, index);
-                    zhanghe->skip(change.to, true);
-                }
+                room->askForDiscard(zhanghe, objectName(), 1, 1, false, false, discard_prompt);
+                if (!zhanghe->isSkipped(change.to) && (index == 2 || index == 3))
+                    room->askForUseCard(zhanghe, "@@qiaobian", use_prompt, index);
+                zhanghe->skip(change.to, true);
             }
         }
         else if (triggerEvent == FinishJudge) {

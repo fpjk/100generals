@@ -199,7 +199,7 @@ public:
                         givees << p;
                 }
                 givees << simayi;
-                ServerPlayer *givee = room->askForPlayerChosen(simayi, givees, "yangshi", "@yangshi-give:" + target->objectName());
+                ServerPlayer *givee = room->askForPlayerChosen(simayi, givees, "yangshigive", "@yangshi-give:" + target->objectName());
                 if (givee != simayi) {
                     CardMoveReason reason2(CardMoveReason::S_REASON_GIVE, simayi->objectName(), givee->objectName(), "yangshi", QString());
                     room->obtainCard(givee, card, reason2, false);
