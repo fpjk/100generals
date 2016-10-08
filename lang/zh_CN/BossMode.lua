@@ -50,7 +50,7 @@ return {
 	[":bossguiji"] = "锁定技。准备阶段结束时，若你的判定区有牌，随机弃置其中一张。",
 	["bosslianyu"] = "炼狱",
 	[":bosslianyu"] = "结束阶段开始时，你可以对所有其他角色各造成1点火焰伤害。",
-    ["bossjuece"] = "绝策",
+	["bossjuece"] = "绝策",
 	[":bossjuece"] = "你的回合内，一名体力值大于0的角色失去最后的手牌后，你可以对其造成1点伤害。",
 
 	["#boss_heiwuchang"] = "Boss Lv.3",
@@ -77,9 +77,9 @@ return {
 	[":bossmodao"] = "锁定技。准备阶段开始时，你摸两张牌。",
 	["bossqushou"] = "驱兽",
 	[":bossqushou"] = "出牌阶段开始时，你可以视为使用一张【南蛮入侵】。",   
-    ["kuanggu"] = "狂骨",
+	["kuanggu"] = "狂骨",
 	[":kuanggu"] = "锁定技。每当你对一名距离1以内角色造成1点伤害后，你回复1点体力。",
-    ["yizhong"] = "毅重",
+	["yizhong"] = "毅重",
 	[":yizhong"] = "锁定技。若你的装备区没有防具牌，黑色【杀】对你无效。",
 
 	["#boss_yecha"] = "Boss Lv.4",

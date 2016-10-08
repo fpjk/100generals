@@ -2,7 +2,7 @@
 
 return {
 	["wind"] = "风包",
-      
+	  
 	["#xuhuang"] = "周亚夫之风",
 	["xuhuang"] = "徐晃",
 	["illustrator:xuhuang"] = "Tuu.",
@@ -52,7 +52,7 @@ return {
 	["zhiba"] = "制霸",
 	[":zhiba"] = "主公技。锁定技。其他吴势力角色使用的【杀】对你造成伤害时，其选择一项：观看你的手牌，然后可以弃置其中的一张【闪】；或防止此伤害并摸一张牌，然后你于此【杀】因结算完毕置入弃牌堆后，获得之。",
 	--["#HunziWake"] = "%from ，触发“%arg”觉醒",
-    
+	
 	["#pangde"] = "人马一体",
 	["pangde"] = "庞德",
 	["illustrator:pangde"] = "LiuHeng",
@@ -77,8 +77,8 @@ return {
 	["#GuhuoQuery"] = "%from 表示 %arg",
 	["$GuhuoResult"] = "%from 的“<font color=\"yellow\"><b>蛊惑</b></font>”牌是 %card",
 	["#Chanyuan"] = "%from 的“%arg”被触发，无法质疑",
-    
-    ["god"] = "神",
+	
+	["god"] = "神",
 
 	["#shenguanyu"] = "鬼神再临",
 	["shenguanyu"] = "神关羽",

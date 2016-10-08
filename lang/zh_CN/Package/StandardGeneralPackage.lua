@@ -11,7 +11,7 @@ return {
 	[":jianxiong"] = "每当你受到1点伤害后，你可以选择一项：摸一张牌，或获得对你造成伤害的牌。",
 	["jianxiong:obtain"] = "获得对你造成伤害的牌",
 	["jianxiong:draw"] = "摸一张牌",
-    ["jianxiong:cancel"] = "放弃",
+	["jianxiong:cancel"] = "放弃",
 	["baye"] = "霸业",
 	[":baye"] = "若你的手牌数多于体力值，你可以跳过判定阶段。",
 	["hujia"] = "护驾",
@@ -37,7 +37,7 @@ return {
 	["qingjian"] = "清俭",
 	[":qingjian"] = "每当你于摸牌阶段外获得手牌后，你可以将其中至少一张牌任意分配给其他角色。",
 	["qingjian-invoke"] = "你可以选择一名其他角色发动“清俭”<br/> <b>操作提示</b>: 选择一名其他角色→点击确定→选择要分配的牌→点击确定<br/>",
-    ["@qingjian-give"] = "你可以发动“清俭”将至多 %arg 张牌交给 %dest ",
+	["@qingjian-give"] = "你可以发动“清俭”将至多 %arg 张牌交给 %dest ",
 
 	["#zhangliao"] = "前将军",
 	["zhangliao"] = "张辽",
@@ -83,7 +83,7 @@ return {
 	[":jieming"] = "当你受到1点伤害后， 你可以令除伤害来源外一名手牌数不多于体力值的角色摸两张牌。",
 	["jieming-invoke"] = "你可以发动“节命”<br/> <b>操作提示</b>: 选择一名角色→点击确定<br/>",
 	["#QuhuNoWolf"] = "%from “<font color=\"yellow\"><b>驱虎</b></font>”拼点赢，由于 %to 攻击范围内没有【杀】的合法目标，结算中止",
-    
+	
 	-- 蜀势力
 	["#liubei"] = "乱世的枭雄",
 	["liubei"] = "刘备",
@@ -114,8 +114,8 @@ return {
 	[":mangzhi"] = "当你使用【杀】指定目标后，你可以令目标角色猜测你手牌中是否有【杀】，然后展示手牌。若猜测错误，你弃置其一张牌，然后摸一张牌。",
 	["mangzhi:haveslash"] = "行行行，你有杀你牛",
 	["mangzhi:noslash"] = "没杀莫装B",
-    ["#MangzhiSlash"] = "%from 猜测有杀",
-    ["#MangzhiNoSlash"] = "%from 猜测没有杀",
+	["#MangzhiSlash"] = "%from 猜测有杀",
+	["#MangzhiNoSlash"] = "%from 猜测没有杀",
 
 	["#zhugeliang"] = "迟暮的丞相",
 	["zhugeliang"] = "诸葛亮",
@@ -149,7 +149,7 @@ return {
 	["tieji"] = "铁骑",
 	[":tieji"] = "每当你指定【杀】的目标后，你可以令该角色的非锁定技无效直到回合结束并摸一张牌：若如此做，你弃一张牌，然后该角色须弃置一张与你弃置的牌颜色相同的牌，否则其不能使用【闪】响应此【杀】。",
 	["@tieji-discard"] = "请弃置一张 %arg 牌，否则你不能使用【闪】响应此【杀】",
-    ["@tieji"] = "请弃置一张牌",
+	["@tieji"] = "请弃置一张牌",
 
 	["#huangyueying"] = "归隐的杰女",
 	["huangyueying"] = "黄月英",
@@ -236,7 +236,7 @@ return {
 	["illustrator:luxun"] = "depp",
 	["qianxun"] = "谦逊",
 	[":qianxun"] = "若你是延时锦囊牌或其他角色使用的非延时锦囊牌的唯一目标，则当此牌生效时，你可以将所有手牌扣置于武将牌旁。一名角色的回合结束时，你获得所有“谦逊牌”。",
-    ["moral"] = "谦逊牌"
+	["moral"] = "谦逊牌",
 	["lianying"] = "连营",
 	[":lianying"] = "每当你失去最后的手牌后，你可以令至多X名角色各摸一张牌。（X为你失去的手牌数）",
 	["@lianying-card"] = "你可以发动“连营”令至多 %arg 名角色各摸一张牌",
@@ -255,8 +255,8 @@ return {
 	["illustrator:huatuo"] = "琛·美弟奇",
 	["chuli"] = "除疠",
 	[":chuli"] = "阶段技。若你有牌，你可以选择至少一名势力各不相同的有牌的其他角色：若如此做，你令你与这些角色各弃置一张牌，然后你和这些角色各摸一张牌，然后以此法弃置黑桃牌的角色摸一张牌。",
-    ["@chuli"] = "请弃置一张牌",
-    ["jijiu"] = "急救",
+	["@chuli"] = "请弃置一张牌",
+	["jijiu"] = "急救",
 	[":jijiu"] = "你的回合外，你可以将一张红色牌当【桃】使用。",
 	
 	["#lvbu"] = "武的化身",
@@ -285,7 +285,7 @@ return {
 	[":wangzun"] = "主公的准备阶段开始时，你可以摸一张牌，然后主公本回合手牌上限-1。",
 	["tongji"] = "同疾",
 	[":tongji"] = "锁定技。若你的手牌数大于你的体力值，且你在一名角色的攻击范围内，则其他角色不能被选择为该角色的【杀】的目标。",
-    
+	
 	["#jiaxu"] = "冷酷的毒士",
 	["jiaxu"] = "贾诩",
 	["wansha"] = "完杀",
@@ -298,15 +298,15 @@ return {
 	["$LuanwuAnimate"] = "image=image/animate/luanwu.png",
 	["#WanshaOne"] = "%from 的“%arg”被触发，只能 %from 自救",
 	["#WanshaTwo"] = "%from 的“%arg”被触发，只有 %from 和 %to 才能救 %to",
-    
-    ["#gongsunzan"] = "白马将军",
+	
+	["#gongsunzan"] = "白马将军",
 	["gongsunzan"] = "公孙瓒",
 	["illustrator:gongsunzan"] = "Vincent",
 	["qiaomeng"] = "趫猛",
 	[":qiaomeng"] = "每当你使用【杀】对一名角色造成伤害后，你可以弃置该角色装备区的一张牌：若此牌为坐骑牌，此牌置入弃牌堆时你获得之。",
-    ["yicong"] = "义从",
-	[":yicong"] = "锁定技。你计算与其他角色的距离时-1；当你的体力值不大于2时，其他角色计算与你的距离时+1。",    
-    
+	["yicong"] = "义从",
+	[":yicong"] = "锁定技。你计算与其他角色的距离时-1；当你的体力值不大于2时，其他角色计算与你的距离时+1。",	
+	
 	["#zhangjiao"] = "天公将军",
 	["zhangjiao"] = "张角",
 	["illustrator:zhangjiao"] = "LiuHeng",
@@ -321,7 +321,7 @@ return {
 	["huangtian"] = "黄天",
 	[":huangtian"] = "主公技。阶段技。其他群雄角色的出牌阶段，该角色可以交给你一张红色牌。",
 	["huangtian_attach"] = "黄天送牌",
-     
+	 
 	["#liuxie"] = "受困天子",
 	["liuxie"] = "刘协",
 	["illustrator:liuxie"] = "LiuHeng",
