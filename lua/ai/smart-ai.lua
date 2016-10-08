@@ -22,106 +22,106 @@ function CloneAI(player)
 	return SmartAI(player).lua_ai
 end
 
-sgs.ais =				   {}
-sgs.ai_card_intention =	 {}
+sgs.ais =                   {}
+sgs.ai_card_intention =     {}
 sgs.ai_playerchosen_intention = {}
-sgs.ai_Yiji_intention =	 {}
+sgs.ai_Yiji_intention =     {}
 sgs.ai_retrial_intention =  {}
-sgs.role_evaluation =	   {}
-sgs.ai_role =			   {}
-sgs.ai_keep_value =		 {}
-sgs.ai_use_value =		  {}
-sgs.ai_use_priority =	   {}
-sgs.ai_suit_priority =	  {}
-sgs.ai_chaofeng =		   {} -- obsolete
-sgs.ai_global_flags =	   {}
-sgs.ai_skill_invoke =	   {}
-sgs.ai_skill_suit =		 {}
-sgs.ai_skill_cardask =	  {}
-sgs.ai_skill_choice =	   {}
-sgs.ai_skill_askforag =	 {}
+sgs.role_evaluation =       {}
+sgs.ai_role =               {}
+sgs.ai_keep_value =         {}
+sgs.ai_use_value =          {}
+sgs.ai_use_priority =       {}
+sgs.ai_suit_priority =      {}
+sgs.ai_chaofeng =           {} -- obsolete
+sgs.ai_global_flags =       {}
+sgs.ai_skill_invoke =       {}
+sgs.ai_skill_suit =         {}
+sgs.ai_skill_cardask =      {}
+sgs.ai_skill_choice =       {}
+sgs.ai_skill_askforag =     {}
 sgs.ai_skill_askforyiji =   {}
-sgs.ai_skill_pindian =	  {}
+sgs.ai_skill_pindian =      {}
 sgs.ai_filterskill_filter = {}
 sgs.ai_skill_playerchosen = {}
-sgs.ai_skill_discard =	  {}
-sgs.ai_cardshow =		   {}
-sgs.ai_nullification =	  {}
+sgs.ai_skill_discard =      {}
+sgs.ai_cardshow =           {}
+sgs.ai_nullification =      {}
 sgs.ai_skill_cardchosen =   {}
-sgs.ai_skill_use =		  {}
-sgs.ai_cardneed =		   {}
-sgs.ai_skill_use_func =	 {}
-sgs.ai_skills =			 {}
+sgs.ai_skill_use =          {}
+sgs.ai_cardneed =           {}
+sgs.ai_skill_use_func =     {}
+sgs.ai_skills =             {}
 sgs.ai_slash_weaponfilter = {}
-sgs.ai_slash_prohibit =	 {}
+sgs.ai_slash_prohibit =     {}
 sgs.ai_view_as = {}
 sgs.ai_cardsview = {}
 sgs.ai_cardsview_valuable = {}
-sgs.dynamic_value =		 {
-	damage_card =		   {},
-	control_usecard =	   {},
-	control_card =		  {},
-	lucky_chance =		  {},
-	benefit =			   {}
+sgs.dynamic_value =         {
+	damage_card =           {},
+	control_usecard =       {},
+	control_card =          {},
+	lucky_chance =          {},
+	benefit =               {}
 }
 sgs.ai_choicemade_filter =  {
-	cardUsed =			  {},
-	cardResponded =		 {},
-	skillInvoke =		   {},
-	skillChoice =		   {},
-	Nullification =		 {},
-	playerChosen =		  {},
-	cardChosen =			{},
-	Yiji =				  {},
-	viewCards =			 {},
-	pindian =			   {}
+	cardUsed =              {},
+	cardResponded =         {},
+	skillInvoke =           {},
+	skillChoice =           {},
+	Nullification =         {},
+	playerChosen =          {},
+	cardChosen =            {},
+	Yiji =                  {},
+	viewCards =             {},
+	pindian =               {}
 }
 
-sgs.card_lack =			 {}
-sgs.ai_need_damaged =	   {}
-sgs.ai_debug_func =		 {}
-sgs.ai_chat_func =		  {}
-sgs.ai_event_callback =	 {}
-sgs.explicit_renegade =	 false
-sgs.ai_NeedPeach =		  {}
-sgs.ai_damage_effect =	  {}
-sgs.ai_current_judge =	  {}
+sgs.card_lack =             {}
+sgs.ai_need_damaged =       {}
+sgs.ai_debug_func =         {}
+sgs.ai_chat_func =          {}
+sgs.ai_event_callback =     {}
+sgs.explicit_renegade =     false
+sgs.ai_NeedPeach =          {}
+sgs.ai_damage_effect =      {}
+sgs.ai_current_judge =      {}
 sgs.ai_need_retrial_func =  {}
 
 
 for i=sgs.NonTrigger, sgs.NumOfEvents, 1 do
-	sgs.ai_debug_func[i]	={}
-	sgs.ai_chat_func[i]	 ={}
+	sgs.ai_debug_func[i]    ={}
+	sgs.ai_chat_func[i]     ={}
 	sgs.ai_event_callback[i]={}
 end
 
 function setInitialTables()
 	sgs.current_mode_players = { lord = 0, loyalist = 0, rebel = 0, renegade = 0 }
-	sgs.ai_type_name =		  {"Skill", "Basic", "Trick", "Equip"}
+	sgs.ai_type_name =          {"Skill", "Basic", "Trick", "Equip"}
 	sgs.lose_equip_skill = "kofxiaoji|xiaoji|xuanfeng|nosxuanfeng"
 	sgs.need_kongcheng = "lianying|noslianying|kongcheng|sijian|hengzheng"
 	sgs.masochism_skill =   "guixin|yiji|fankui|jieming|xuehen|neoganglie|ganglie|vsganglie|enyuan|fangzhu|nosenyuan|langgu|quanji|" ..
 										"zhiyu|renjie|tanlan|tongxin|huashen|duodao|chengxiang|benyu"
-	sgs.wizard_skill =	  "guicai|guidao|jilve|tiandu|luoying|noszhenlie|huanshi"
-	sgs.wizard_harm_skill =	 "guicai|guidao|jilve"
-	sgs.priority_skill =		"dimeng|haoshi|qingnang|nosjizhi|jizhi|guzheng|qixi|jieyin|guose|duanliang|jujian|fanjian|neofanjian|lijian|" ..
+	sgs.wizard_skill =      "guicai|guidao|jilve|tiandu|luoying|noszhenlie|huanshi"
+	sgs.wizard_harm_skill =     "guicai|guidao|jilve"
+	sgs.priority_skill =        "dimeng|haoshi|qingnang|nosjizhi|jizhi|guzheng|qixi|jieyin|guose|duanliang|jujian|fanjian|neofanjian|lijian|" ..
 						"noslijian|manjuan|tuxi|qiaobian|yongsi|zhiheng|luoshen|nosrende|rende|mingce|wansha|gongxin|jilve|anxu|" ..
 						"qice|yinling|qingcheng|houyuan|zhaoxin|shuangren|zhaxiang|xiansi|junxing|bifa|yanyu|shenxian|jgtianyun"
-	sgs.save_skill =		"jijiu|buyi|nosjiefan|chunlao|longhun"
-	sgs.exclusive_skill =	   "huilei|duanchang|wuhun|buqu|dushi"
-	sgs.Active_cardneed_skill =	 "paoxiao|tianyi|xianzhen|shuangxiong|nosjizhi|jizhi|guose|duanliang|qixi|qingnang|luoyi|" ..
+	sgs.save_skill =        "jijiu|buyi|nosjiefan|chunlao|longhun"
+	sgs.exclusive_skill =       "huilei|duanchang|wuhun|buqu|dushi"
+	sgs.Active_cardneed_skill =     "paoxiao|tianyi|xianzhen|shuangxiong|nosjizhi|jizhi|guose|duanliang|qixi|qingnang|luoyi|" ..
 												"guhuo|nosguhuo|jieyin|zhiheng|rende|nosrende|nosjujian|luanji|qiaobian|lirang|mingce|"..
 												"fuhun|spzhenwei|nosfuhun|nosluoyi|yinbing|jieyue|sanyao|xinzhan"
-	sgs.notActive_cardneed_skill =	  "kanpo|guicai|guidao|beige|xiaoguo|liuli|tianxiang|jijiu|leiji|nosleiji"..
+	sgs.notActive_cardneed_skill =      "kanpo|guicai|guidao|beige|xiaoguo|liuli|tianxiang|jijiu|leiji|nosleiji"..
 													"qingjian|zhuhai|qinxue|jspdanqi"
 	sgs.cardneed_skill =  sgs.Active_cardneed_skill .. "|" .. sgs.notActive_cardneed_skill
-	sgs.drawpeach_skill =	   "tuxi|qiaobian"
-	sgs.recover_skill =	 "nosrende|rende|kofkuanggu|kuanggu|zaiqi|jieyin|qingnang|yinghun|hunzi|shenzhi|longhun|nosmiji|zishou|ganlu|xueji|shangshi|" ..
+	sgs.drawpeach_skill =       "tuxi|qiaobian"
+	sgs.recover_skill =     "nosrende|rende|kofkuanggu|kuanggu|zaiqi|jieyin|qingnang|yinghun|hunzi|shenzhi|longhun|nosmiji|zishou|ganlu|xueji|shangshi|" ..
 						"nosshangshi|ytchengxiang|buqu|miji|quji"
-	sgs.use_lion_skill =		 "longhun|duanliang|qixi|guidao|noslijian|lijian|jujian|nosjujian|zhiheng|mingce|yongsi|fenxun|gongqi|" ..
+	sgs.use_lion_skill =         "longhun|duanliang|qixi|guidao|noslijian|lijian|jujian|nosjujian|zhiheng|mingce|yongsi|fenxun|gongqi|" ..
 						"yinling|jilve|qingcheng|neoluoyi|diyyicong"
-	sgs.need_equip_skill =	  "shensu|mingce|jujian|beige|yuanhu|huyuan|gongqi|nosgongqi|yanzheng|qingcheng|neoluoyi|longhun|shuijian|yinbing"
-	sgs.judge_reason =	  "bazhen|EightDiagram|wuhun|supply_shortage|tuntian|nosqianxi|nosmiji|indulgence|lightning|baonue"..
+	sgs.need_equip_skill =      "shensu|mingce|jujian|beige|yuanhu|huyuan|gongqi|nosgongqi|yanzheng|qingcheng|neoluoyi|longhun|shuijian|yinbing"
+	sgs.judge_reason =      "bazhen|EightDiagram|wuhun|supply_shortage|tuntian|nosqianxi|nosmiji|indulgence|lightning|baonue"..
 									"|nosleiji|leiji|caizhaoji_hujia|tieji|luoshen|ganglie|neoganglie|vsganglie|kofkuanggu"
 	sgs.straight_damage_skill = "qiangxi|nosxuanfeng|duwu|danshou"
 	sgs.double_slash_skill = "paoxiao|fuhun|tianyi|xianzhen|zhaxiang|lihuo|jiangchi|shuangxiong|qiangwu|luanji"
@@ -4021,7 +4021,7 @@ function SmartAI:willUsePeachTo(dying)
 				end
 			end
 		end
-	   -- 鞭尸...
+	    -- 鞭尸...
 		if not dying:hasSkills(sgs.masochism_skill) and not hasBuquEffect(dying)
 			and not sgs.GetConfig("EnableHegemony", false)
 			and not (dying:hasSkill("niepan") and dying:getMark("@nirvana") > 0)

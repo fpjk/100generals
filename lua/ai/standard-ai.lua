@@ -1754,19 +1754,19 @@ function sgs.ai_cardneed.jizhi(to, card)
 end
 
 sgs.jizhi_keep_value = {
-	Peach	   = 6,
+	Peach       = 6,
 	Analeptic   = 5.9,
-	Jink		= 5.8,
-	ExNihilo	= 5.7,
-	Snatch	  = 5.7,
+	Jink        = 5.8,
+	ExNihilo    = 5.7,
+	Snatch      = 5.7,
 	Dismantlement = 5.6,
 	IronChain   = 5.5,
-	SavageAssault=5.4,
-	Duel		= 5.3,
+	SavageAssault = 5.4,
+	Duel        = 5.3,
 	ArcheryAttack = 5.2,
 	AmazingGrace = 5.1,
 	Collateral  = 5,
-	FireAttack  =4.9
+	FireAttack  = 4.9
 }
 
 
@@ -2710,8 +2710,8 @@ end
 function SmartAI:getWoundedFriend(maleOnly, include_self)
 	local friends = include_self and self.friends or self.friends_noself
 	self:sort(friends, "hp")
-	local list1 = {}	-- need help
-	local list2 = {}	-- do not need help
+	local list1 = {}    -- need help
+	local list2 = {}    -- do not need help
 	local addToList = function(p,index)
 		if ( (not maleOnly) or (maleOnly and p:isMale()) ) and p:isWounded() then
 			table.insert(index ==1 and list1 or list2, p)
@@ -2802,7 +2802,7 @@ sgs.ai_skill_use_func.JieyinCard = function(card, use, self)
 	end
 end
 
-sgs.ai_use_priority.JieyinCard = 2.8	-- 下调至决斗之后
+sgs.ai_use_priority.JieyinCard = 2.8    -- 下调至决斗之后
 
 sgs.ai_card_intention.JieyinCard = function(self, card, from, tos)
 	if not from:hasFlag("jieyin_isenemy_"..tos[1]:objectName()) then
@@ -3159,13 +3159,12 @@ function SmartAI:findLijianTarget(card_name, use)
 			if safe then return friend_maxSlash end
 		else self:log("unfound")
 		end
-		if nos_fazheng or fazheng then  return nos_fazheng or fazheng end	   --备用友方，各种恶心的法正
 		return nil
 	end
 
 	if self.role == "rebel" or (self.role == "renegade" and sgs.current_mode_players["loyalist"] + 1 > sgs.current_mode_players["rebel"]) then
 
-		if lord and lord:isMale() and not lord:isNude() and lord:objectName() ~= self.player:objectName() then	  -- 优先离间1血忠和主
+		if lord and lord:isMale() and not lord:isNude() and lord:objectName() ~= self.player:objectName() then      -- 优先离间1血忠和主
 			self:sort(self.enemies, "handcard")
 			local e_peaches = 0
 			local loyalist
@@ -3182,7 +3181,7 @@ function SmartAI:findLijianTarget(card_name, use)
 			if loyalist and e_peaches < 1 then return loyalist, lord end
 		end
 
-		if #self.friends_noself >= 2 and self:getAllPeachNum() < 1 then	 --收友方反
+		if #self.friends_noself >= 2 and self:getAllPeachNum() < 1 then     --收友方反
 			local nextplayerIsEnemy
 			local nextp = self.player:getNextAlive()
 			for i = 1, self.room:alivePlayerCount() do
@@ -3200,7 +3199,7 @@ function SmartAI:findLijianTarget(card_name, use)
 
 				for _, a_friend in ipairs(self.friends_noself) do   -- 目标1：寻找1血友方
 					if a_friend:getHp() == 1 and a_friend:isKongcheng() and not self:hasSkills("kongcheng|yuwen", a_friend) and a_friend:isMale() then
-						for _, b_friend in ipairs(self.friends_noself) do	   --目标2：寻找位于我之后，离我最近的友方
+						for _, b_friend in ipairs(self.friends_noself) do       --目标2：寻找位于我之后，离我最近的友方
 							if b_friend:objectName() ~= a_friend:objectName() and b_friend:isMale() and self:playerGetRound(b_friend) < round
 							and self:hasTrickEffective(duel, a_friend, b_friend) then
 
