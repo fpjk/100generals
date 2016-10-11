@@ -161,7 +161,7 @@ QString General::getSkillDescription(bool include_name) const
     QString description;
 
     QList<const Skill *> skills = getVisibleSkillList();
-    if (hasSkill("#luanshi")) skills << Sanguosha->getSkill("luanshi_attach");
+    //if (hasSkill("#luanshi")) skills << Sanguosha->getSkill("luanshi_attach");
 
     foreach (const Skill *skill, skills) {
         QString skill_name = Sanguosha->translate(skill->objectName());

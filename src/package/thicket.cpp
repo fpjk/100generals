@@ -735,12 +735,12 @@ public:
     }
 };
 
-
-class LuanshiViewAsSkill : public ViewAsSkill
+class LuanshiAttach : public ViewAsSkill
 {
 public:
-    LuanshiViewAsSkill() : ViewAsSkill("luanshi_attach")
+    LuanshiAttach() : ViewAsSkill("luanshi_attach")
     {
+        attached_lord_skill = true;
     }
 
     bool isEnabledAtPlay(const Player *player) const
@@ -751,6 +751,33 @@ public:
     bool shouldBeVisible(const Player *Self) const
     {
         return Self && Self->getKingdom() == "qun";
+    }
+
+    bool viewFilter(const QList<const Card *> &selected, const Card *) const
+    {
+        return selected.isEmpty();
+    }
+
+    const Card *viewAs(const QList<const Card *> &cards) const
+    {
+        if (cards.isEmpty() && Self->isChained()) return NULL;
+        LuanshiCard *luanshi_card = new LuanshiCard;
+        luanshi_card->addSubcards(cards);
+        luanshi_card->setSkillName("luanshi");
+        return luanshi_card;
+    }
+};
+
+class LuanshiViewAsSkill : public ViewAsSkill
+{
+public:
+    LuanshiViewAsSkill() : ViewAsSkill("luanshi$")
+    {
+    }
+
+    bool isEnabledAtPlay(const Player *player) const
+    {
+        return shouldBeVisible(player) && !player->hasUsed("LuanshiCard") && !(player->isNude() && player->isChained());
     }
 
     bool viewFilter(const QList<const Card *> &selected, const Card *) const
@@ -799,10 +826,11 @@ void LuanshiCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &t
 class Luanshi : public TriggerSkill
 {
 public:
-    Luanshi() : TriggerSkill("#luanshi$")
+    Luanshi() : TriggerSkill("luanshi$")
     {
         events << EventPhaseChanging << Death << GameStart << EventAcquireSkill << EventLoseSkill;
         global = true;
+        view_as_skill = new LuanshiViewAsSkill;
     }
 
     int getPriority(TriggerEvent) const
@@ -825,7 +853,12 @@ public:
                     lords << p;
             }
             if (lords.isEmpty()) return false;
-            foreach(ServerPlayer *p, room->getAlivePlayers()) {
+            QList<ServerPlayer *> players;
+            if (lords.length() > 1)
+                players = room->getAlivePlayers();
+            else
+                players = room->getOtherPlayers(lords.first());
+            foreach(ServerPlayer *p, players) {
                 if (!p->hasSkill("luanshi_attach"))
                     room->attachSkillToPlayer(p, "luanshi_attach");
             }
@@ -836,8 +869,14 @@ public:
                 if (p->hasLordSkill(this))
                     lords << p;
             }
-            if (lords.length() > 1) return false;
-            foreach(ServerPlayer *p, room->getAlivePlayers()) {
+            if (lords.length() > 2) return false;
+
+            QList<ServerPlayer *> players;
+            if (lords.isEmpty())
+                players = room->getAlivePlayers();
+            else
+                players << lords.first();
+            foreach(ServerPlayer *p, players) {
                 if (p->hasSkill("luanshi_attach"))
                     room->detachSkillFromPlayer(p, "luanshi_attach", true);
             }
@@ -878,9 +917,9 @@ public:
     {
     }
 
-    bool isSkillValid(const Player *player, const Skill *) const
+    bool isSkillValid(const Player *player, const Skill *skill) const
     {
-        return player->getMark("@luanshi_invalidity") == 0 ;
+        return player->getMark("@luanshi_invalidity") == 0 || skill->isAttachedLordSkill();
     }
 };
 
@@ -924,8 +963,7 @@ ThicketPackage::ThicketPackage()
     dongzhuo->addSkill(new Benghuai);
     dongzhuo->addSkill(new Luanshi);
     dongzhuo->addSkill(new LuanshiInvalidity);
-    related_skills.insertMulti("#luanshi", "#luanshi-invalidity");
-    dongzhuo->addRelateSkill("luanshi_attach");
+    related_skills.insertMulti("luanshi", "#luanshi-invalidity");
 
     General *huaxiong = new General(this, "huaxiong", "qun", 6); // QUN 019
     huaxiong->addSkill(new Yaowu);
@@ -935,7 +973,7 @@ ThicketPackage::ThicketPackage()
     addMetaObject<DimengCard>();
     addMetaObject<LuanshiCard>();
 
-    skills << new LuanshiViewAsSkill;
+    skills << new LuanshiAttach;
 }
 
 ADD_PACKAGE(Thicket)
