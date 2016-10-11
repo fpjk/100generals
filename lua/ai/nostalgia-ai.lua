@@ -1357,7 +1357,7 @@ end
 
 
 sgs.ai_need_damaged.nosfankui = function (self, attacker, player)
-	if not player:hasSkill("nosguicai+nosfankui") then return false end
+	if not player:hasSkill("nosguiming+nosfankui") then return false end
 	if not attacker then return end
 	local need_retrial = function(target)
 		local alive_num = self.room:alivePlayerCount()
@@ -1416,7 +1416,7 @@ sgs.ai_need_damaged.nosfankui = function (self, attacker, player)
 	return false
 end
 
-sgs.ai_skill_cardask["@nosguicai-card"]=function(self, data)
+sgs.ai_skill_cardask["@nosguiming-card"]=function(self, data)
 	local judge = data:toJudge()
 
 	if self.room:getMode():find("_mini_46") and not judge:isGood() then return "$" .. self.player:handCards():first() end
@@ -1431,7 +1431,7 @@ sgs.ai_skill_cardask["@nosguicai-card"]=function(self, data)
 	return "."
 end
 
-function sgs.ai_cardneed.nosguicai(to, card, self)
+function sgs.ai_cardneed.nosguiming(to, card, self)
 	for _, player in sgs.qlist(self.room:getAllPlayers()) do
 		if self:getFinalRetrial(to) == 1 then
 			if player:containsTrick("lightning") and not player:containsTrick("YanxiaoCard") then
@@ -1447,7 +1447,7 @@ function sgs.ai_cardneed.nosguicai(to, card, self)
 	end
 end
 
-sgs.nosguicai_suit_value = {
+sgs.nosguiming_suit_value = {
 	heart = 3.9,
 	club = 3.9,
 	spade = 3.5

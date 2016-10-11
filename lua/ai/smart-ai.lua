@@ -102,8 +102,8 @@ function setInitialTables()
 	sgs.need_kongcheng = "lianying|noslianying|kongcheng|sijian|hengzheng"
 	sgs.masochism_skill =   "guixin|yiji|fankui|jieming|xuehen|neoganglie|ganglie|vsganglie|enyuan|fangzhu|nosenyuan|langgu|quanji|" ..
 										"zhiyu|renjie|tanlan|tongxin|huashen|duodao|chengxiang|benyu"
-	sgs.wizard_skill =      "guicai|guidao|jilve|tiandu|luoying|noszhenlie|huanshi"
-	sgs.wizard_harm_skill =     "guicai|guidao|jilve"
+	sgs.wizard_skill =      "guiming|guidao|jilve|tiandu|luoying|noszhenlie|huanshi"
+	sgs.wizard_harm_skill =     "guiming|guidao|jilve"
 	sgs.priority_skill =        "dimeng|haoshi|qingnang|nosjizhi|jizhi|guzheng|qixi|jieyin|guose|duanliang|jujian|fanjian|neofanjian|lijian|" ..
 						"noslijian|manjuan|tuxi|qiaobian|yongsi|zhiheng|luoshen|nosrende|rende|mingce|wansha|gongxin|jilve|anxu|" ..
 						"qice|yinling|qingcheng|houyuan|zhaoxin|shuangren|zhaxiang|xiansi|junxing|bifa|yanyu|shenxian|jgtianyun"
@@ -112,7 +112,7 @@ function setInitialTables()
 	sgs.Active_cardneed_skill =     "paoxiao|tianyi|xianzhen|shuangxiong|nosjizhi|jizhi|guose|duanliang|qixi|qingnang|luoyi|" ..
 												"guhuo|nosguhuo|jieyin|zhiheng|rende|nosrende|nosjujian|luanji|qiaobian|lirang|mingce|"..
 												"fuhun|spzhenwei|nosfuhun|nosluoyi|yinbing|jieyue|sanyao|xinzhan"
-	sgs.notActive_cardneed_skill =      "kanpo|guicai|guidao|beige|xiaoguo|liuli|tianxiang|jijiu|leiji|nosleiji"..
+	sgs.notActive_cardneed_skill =      "kanpo|guiming|guidao|beige|xiaoguo|liuli|tianxiang|jijiu|leiji|nosleiji"..
 													"qingjian|zhuhai|qinxue|jspdanqi"
 	sgs.cardneed_skill =  sgs.Active_cardneed_skill .. "|" .. sgs.notActive_cardneed_skill
 	sgs.drawpeach_skill =       "tuxi|qiaobian"
@@ -4229,7 +4229,7 @@ function SmartAI:canRetrial(player, to_retrial, reason)
 		end
 		if blackequipnum + player:getHandcardNum() > 0 then return true end
 	end
-	if player:hasSkill("guicai") and player:getHandcardNum() > 0 then return true end
+	if player:hasSkill("guiming") and player:getHandcardNum() > 0 then return true end
 	if player:hasSkill("huanshi") and not player:isNude() then return true end
 	if player:hasSkill("jilve") and player:getHandcardNum() > 0 and player:getMark("@bear") > 0 then return true end
 	return

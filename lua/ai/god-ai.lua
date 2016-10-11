@@ -736,7 +736,7 @@ sgs.ai_skill_invoke.jilve_jizhi = function(self, data)
 	return use or card:isKindOf("ExNihilo")
 end
 
-sgs.ai_skill_invoke.jilve_guicai = function(self, data)
+sgs.ai_skill_invoke.jilve_guiming = function(self, data)
 	local n = self.player:getMark("@bear")
 	local use = (n > 2 or self:getOverflow() > 0)
 	local judge = data:toJudge()

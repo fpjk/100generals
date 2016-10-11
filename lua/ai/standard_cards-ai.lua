@@ -2039,7 +2039,7 @@ function SmartAI:getDangerousCard(who)
 		return armor:getEffectiveId()
 	end
 
-	if (weapon and weapon:isKindOf("SPMoonSpear") and self:hasSkills("guidao|longdan|guicai|jilve|huanshi|qingguo|kanpo", who)) then
+	if (weapon and weapon:isKindOf("SPMoonSpear") and self:hasSkills("guidao|longdan|guiming|jilve|huanshi|qingguo|kanpo", who)) then
 		return weapon:getEffectiveId()
 	end
 	if (weapon and who:hasSkill("liegong|anjian")) then return weapon:getEffectiveId() end
@@ -3158,7 +3158,7 @@ sgs.ai_skill_askforag.amazing_grace = function(self, card_ids)
 			if aplayer:containsTrick("lightning") then
 				lightning = true
 			end
-			if self:hasSkills("guicai|guidao", aplayer) and self:isEnemy(aplayer) then
+			if self:hasSkills("guiming|guidao", aplayer) and self:isEnemy(aplayer) then
 				canRetrial = true
 			end
 		end

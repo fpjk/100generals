@@ -1084,10 +1084,7 @@ public:
                     int n = target->getMark(objectName());
                     if (n < num && !target->isKongcheng()) {
                         QList<int> handcards = target->handCards();
-                        if (!room->askForYiji(target, handcards, objectName(), false, false, true, num - n)) {
-                            if (n == 0)
-                                return false; // User select cancel at the first time of askForYiji, it can be treated as canceling the distribution of the cards
-
+                        if (!room->askForYiji(target, handcards, objectName(), false, false, room->alivePlayerCount() <= 4, num - n)) {
                             break;
                         }
                     } else {
@@ -1095,7 +1092,7 @@ public:
                     }
                 }
                 // give the rest cards randomly
-                /*if (target->getMark(objectName()) < num && !target->isKongcheng()) {
+                if (target->getMark(objectName()) < num && !target->isKongcheng() && room->alivePlayerCount() > 4) {
                     int rest_num = num - target->getMark(objectName());
                     forever {
                         QList<int> handcard_list = target->handCards();
@@ -1110,7 +1107,7 @@ public:
                         if (rest_num == 0 || target->isKongcheng())
                             break;
                     }
-                }*/
+                }
             }
         } else if (triggerEvent == ChoiceMade) {
             QString str = data.toString();
@@ -1264,7 +1261,7 @@ DangxianCard::DangxianCard()
 bool DangxianCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
 {
     Slash *slash = new Slash(NoSuit, 0);
-    slash->setSkillName("shensu");
+    slash->setSkillName("dangxian");
     slash->deleteLater();
     return slash->targetFilter(targets, to_select, Self);
 }
@@ -3700,6 +3697,7 @@ YJCMPackage::YJCMPackage()
 
     General *liaohua = new General(this, "liaohua", "shu"); // YJ 107
     liaohua->addSkill(new Dangxian);
+    liaohua->addSkill(new SlashNoDistanceLimitSkill("dangxian"));
     liaohua->addSkill(new Fuli);
 
     General *liubiao = new General(this, "liubiao", "qun", 3); // YJ 108

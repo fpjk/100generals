@@ -4885,7 +4885,7 @@ bool Room::askForDiscard(ServerPlayer *player, const QString &reason, int discar
         JsonArray clientReply = player->getClientReply().value<JsonArray>();
         if (!success || ((int)clientReply.size() > discard_num || (int)clientReply.size() < min_num)
             || !JsonUtils::tryParse(clientReply, to_discard)) {
-            if (optional) return false;
+            //if (optional) return false;
             if (optional) return false;
             // time is up, and the server choose the cards to discard
             to_discard = player->forceToDiscard(discard_num, include_equip, true, pattern);

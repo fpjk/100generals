@@ -170,7 +170,7 @@ sgs.ai_skill_cardchosen.fankui = function(self, who, flags)
 end
 
 sgs.ai_need_damaged.yangshi = function (self, attacker, player)
-	if not player:hasSkill("guicai+fankui") then return false end
+	if not player:hasSkill("guiming+fankui") then return false end
 	if not attacker then return end
 	local need_retrial = function(target)
 		local alive_num = self.room:alivePlayerCount()
@@ -247,7 +247,7 @@ sgs.ai_skill_playerchosen.yangshigive = function(self, targets)
 	return nil
 end
 
-sgs.ai_skill_cardask["@guicai-card"]=function(self, data)
+sgs.ai_skill_cardask["@guiming-card"]=function(self, data)
 	local judge = data:toJudge()
 
 	if self.room:getMode():find("_mini_46") and not judge:isGood() then return "$" .. self.player:handCards():first() end
@@ -262,7 +262,7 @@ sgs.ai_skill_cardask["@guicai-card"]=function(self, data)
 	return "."
 end
 
-function sgs.ai_cardneed.guicai(to, card, self)
+function sgs.ai_cardneed.guiming(to, card, self)
 	for _, player in sgs.qlist(self.room:getAllPlayers()) do
 		if self:getFinalRetrial(to) == 1 then
 			if player:containsTrick("lightning") and not player:containsTrick("YanxiaoCard") then
@@ -278,7 +278,7 @@ function sgs.ai_cardneed.guicai(to, card, self)
 	end
 end
 
-sgs.guicai_suit_value = {
+sgs.guiming_suit_value = {
 	heart = 3.9,
 	club = 3.9,
 	spade = 3.5
