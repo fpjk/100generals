@@ -771,7 +771,7 @@ public:
 class LuanshiViewAsSkill : public ViewAsSkill
 {
 public:
-    LuanshiViewAsSkill() : ViewAsSkill("luanshi$")
+    LuanshiViewAsSkill() : ViewAsSkill("luanshi")
     {
     }
 
