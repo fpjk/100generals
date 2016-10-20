@@ -2165,7 +2165,7 @@ public:
     {
         CardUseStruct use = data.value<CardUseStruct>();
 
-        if (use.card->isKindOf("Slash") && use.to.contains(daqiao) && daqiao->canDiscard(daqiao, "he")) {
+        if (use.card->isKindOf("Slash") && use.to.contains(daqiao) && !daqiao->isNude()) {
             QList<ServerPlayer *> players = room->getOtherPlayers(daqiao);
             players.removeOne(use.from);
 
@@ -2187,18 +2187,27 @@ public:
                     daqiao->tag.remove("liuli-card");
                     room->setPlayerProperty(daqiao, "liuli", QString());
                     room->setPlayerFlag(use.from, "-LiuliSlashSource");
-                    foreach (ServerPlayer *p, players) {
+                    ServerPlayer *target = NULL;
+                    foreach(ServerPlayer *p, players) {
                         if (p->hasFlag("LiuliTarget")) {
                             p->setFlags("-LiuliTarget");
-                            if (!use.from->canSlash(p, false))
-                                return false;
-                            use.to.removeOne(daqiao);
-                            use.to.append(p);
-                            room->sortByActionOrder(use.to);
-                            data = QVariant::fromValue(use);
-                            room->getThread()->trigger(TargetConfirming, room, p, data);
-                            return false;
+                            target = p;
+                            break;
                         }
+                    }
+                    if (target && room->askForDiscard(use.from, objectName(), 1, 1, true, true, QString("@liuli-dis::%1").arg(target->objectName()))) {
+                        if (!use.from->canSlash(target, false))
+                            return false;
+                        use.to.removeOne(daqiao);
+                        use.to.append(target);
+                        room->sortByActionOrder(use.to);
+                        data = QVariant::fromValue(use);
+                        room->getThread()->trigger(TargetConfirming, room, target, data);
+                        return false;
+                    } else {
+                        use.to.removeOne(daqiao);
+                        data = QVariant::fromValue(use);
+                        return false;
                     }
                 } else {
                     daqiao->tag.remove("liuli-card");

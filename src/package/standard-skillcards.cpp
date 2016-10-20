@@ -532,6 +532,8 @@ void GuoseCard::onEffect(const CardEffectStruct &effect) const
 
 LiuliCard::LiuliCard()
 {
+    will_throw = false;
+    handling_method = Card::MethodNone;
 }
 
 bool LiuliCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
@@ -566,9 +568,23 @@ bool LiuliCard::targetFilter(const QList<const Player *> &targets, const Player 
     return Self->inMyAttackRange(to_select, range_fix);
 }
 
-void LiuliCard::onEffect(const CardEffectStruct &effect) const
+void LiuliCard::use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const
 {
-    effect.to->setFlags("LiuliTarget");
+    ServerPlayer *from = NULL;
+    foreach(ServerPlayer *p, room->getAlivePlayers()) {
+        if (p->hasFlag("LiuliSlashSource")) {
+            from = p;
+            break;
+        }
+    }
+
+    if (from != NULL) {
+        CardMoveReason reason(CardMoveReason::S_REASON_GIVE, source->objectName(), from->objectName(), "liuli", QString());
+        room->obtainCard(from, this, reason, false);
+    }
+
+    ServerPlayer *target = targets.first();
+    target->setFlags("LiuliTarget");
 }
 
 LianyingCard::LianyingCard()

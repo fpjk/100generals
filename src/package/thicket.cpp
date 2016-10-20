@@ -858,7 +858,7 @@ public:
                 players = room->getAlivePlayers();
             else
                 players = room->getOtherPlayers(lords.first());
-            foreach(ServerPlayer *p, players) {
+            foreach (ServerPlayer *p, players) {
                 if (!p->hasSkill("luanshi_attach"))
                     room->attachSkillToPlayer(p, "luanshi_attach");
             }
