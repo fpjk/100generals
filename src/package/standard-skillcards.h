@@ -67,12 +67,12 @@ public:
     void use(Room *room, ServerPlayer *source, QList<ServerPlayer *> &targets) const;
 };
 
-class HuzhuCard : public SkillCard
+class LongweiCard : public SkillCard
 {
     Q_OBJECT
 
 public:
-    Q_INVOKABLE HuzhuCard();
+    Q_INVOKABLE LongweiCard();
 
     bool targetFixed() const;
     bool targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const;

@@ -441,45 +441,48 @@ public:
     }
 };
 
-TiaoxinCard::TiaoxinCard()
+WujuCard::WujuCard()
 {
 }
 
-bool TiaoxinCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
+bool WujuCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
 {
     return targets.isEmpty() && to_select->inMyAttackRange(Self);
 }
 
-void TiaoxinCard::onEffect(const CardEffectStruct &effect) const
+void WujuCard::onEffect(const CardEffectStruct &effect) const
 {
     Room *room = effect.from->getRoom();
     bool use_slash = false;
     if (effect.to->canSlash(effect.from, NULL, false))
-        use_slash = room->askForUseSlashTo(effect.to, effect.from, "@tiaoxin-slash:" + effect.from->objectName());
-    if (!use_slash && effect.from->canDiscard(effect.to, "he"))
-        room->throwCard(room->askForCardChosen(effect.from, effect.to, "he", "tiaoxin", false, Card::MethodDiscard), effect.to, effect.from);
+        use_slash = room->askForUseSlashTo(effect.to, effect.from, "@wuju-slash:" + effect.from->objectName());
+    if (!use_slash) {
+        room->setPlayerFlag(effect.from, "wuju");
+        if (effect.from->canDiscard(effect.to, "he"))
+            room->throwCard(room->askForCardChosen(effect.from, effect.to, "he", "wuju", false, Card::MethodDiscard), effect.to, effect.from);
+    }
 }
 
-class Tiaoxin : public ZeroCardViewAsSkill
+class Wuju : public ZeroCardViewAsSkill
 {
 public:
-    Tiaoxin() : ZeroCardViewAsSkill("tiaoxin")
+    Wuju() : ZeroCardViewAsSkill("wuju")
     {
     }
 
     bool isEnabledAtPlay(const Player *player) const
     {
-        return !player->hasUsed("TiaoxinCard");
+        return !player->hasUsed("WujuCard");
     }
 
     const Card *viewAs() const
     {
-        return new TiaoxinCard;
+        return new WujuCard;
     }
 
     int getEffectIndex(const ServerPlayer *player, const Card *) const
     {
-        int index = qrand() % 2 + 1;
+        int index = (player->hasUsed("WujuCard")) ? 2 : 1;
         if (!player->hasInnateSkill(this) && player->hasSkill("baobian"))
             index += 3;
         else if (player->hasArmorEffect("eight_diagram"))
@@ -1335,7 +1338,7 @@ MountainPackage::MountainPackage()
     related_skills.insertMulti("tuntian", "#tuntian-clear");
 
     General *jiangwei = new General(this, "jiangwei", "shu"); // SHU 012
-    jiangwei->addSkill(new Tiaoxin);
+    jiangwei->addSkill(new Wuju);
     jiangwei->addSkill(new Zhiji);
 
     General *liushan = new General(this, "liushan$", "shu", 3); // SHU 013
@@ -1370,7 +1373,7 @@ MountainPackage::MountainPackage()
     caiwenji->addSkill(new Duanchang);
 
     addMetaObject<QiaobianCard>();
-    addMetaObject<TiaoxinCard>();
+    addMetaObject<WujuCard>();
     addMetaObject<ZhijianCard>();
     addMetaObject<FangquanCard>();
     addMetaObject<GuzhengCard>();

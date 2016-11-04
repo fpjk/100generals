@@ -199,12 +199,12 @@ void YijueCard::use(Room *room, ServerPlayer *guanyu, QList<ServerPlayer *> &tar
     }
 }
 
-HuzhuCard::HuzhuCard()
+LongweiCard::LongweiCard()
 {
-    m_skillName = "huzhu_card";
+    m_skillName = "longwei_card";
 }
 
-bool HuzhuCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
+bool LongweiCard::targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const
 {
     const Card *card = NULL;
     if (!user_string.isEmpty())
@@ -212,7 +212,7 @@ bool HuzhuCard::targetFilter(const QList<const Player *> &targets, const Player 
     return card && card->targetFilter(targets, to_select, Self) && !Self->isProhibited(to_select, card, targets);
 }
 
-bool HuzhuCard::targetFixed() const
+bool LongweiCard::targetFixed() const
 {
     if (Sanguosha->currentRoomState()->getCurrentCardUseReason() == CardUseStruct::CARD_USE_REASON_RESPONSE)
         return true;
@@ -223,7 +223,7 @@ bool HuzhuCard::targetFixed() const
     return card && card->targetFixed();
 }
 
-bool HuzhuCard::targetsFeasible(const QList<const Player *> &targets, const Player *Self) const
+bool LongweiCard::targetsFeasible(const QList<const Player *> &targets, const Player *Self) const
 {
     const Card *card = NULL;
     if (!user_string.isEmpty())
@@ -231,36 +231,36 @@ bool HuzhuCard::targetsFeasible(const QList<const Player *> &targets, const Play
     return card && card->targetsFeasible(targets, Self);
 }
 
-const Card *HuzhuCard::validateInResponse(ServerPlayer *liushan) const
+const Card *LongweiCard::validateInResponse(ServerPlayer *liushan) const
 {
     Room *room = liushan->getRoom();
     liushan->broadcastSkillInvoke(this);
-    room->notifySkillInvoked(liushan, "huzhuVS");
+    room->notifySkillInvoked(liushan, "longweiVS");
     
     const Card *card = NULL;
-    ServerPlayer *zhaoyun = room->findPlayerBySkillName("huzhu");
-    card = room->askForCard(zhaoyun, user_string, "@huzhu-card:" + liushan->objectName(), QVariant(), Card::MethodResponse, liushan, false, QString(), true);
+    ServerPlayer *zhaoyun = room->findPlayerBySkillName("longwei");
+    card = room->askForCard(zhaoyun, user_string, "@longwei-card:" + liushan->objectName(), QVariant(), Card::MethodResponse, liushan, false, QString(), true);
 
     if (card) {
-        bool will_dis = room->askForSkillInvoke(zhaoyun, "huzhu_dis", "discard");
+        bool will_dis = room->askForSkillInvoke(zhaoyun, "longwei_dis", "discard");
         if (will_dis) {
             ServerPlayer *current = room->getCurrent();
-            int disc = room->askForCardChosen(zhaoyun, current, "he", "huzhu", false, Card::MethodDiscard);
+            int disc = room->askForCardChosen(zhaoyun, current, "he", "longwei", false, Card::MethodDiscard);
             room->throwCard(disc, current, zhaoyun);
         }
         return card;
     }
-    room->setPlayerFlag(liushan, "Global_huzhuFailed");
+    room->setPlayerFlag(liushan, "Global_longweiFailed");
     return NULL;
 }
 
-const Card *HuzhuCard::validate(CardUseStruct &cardUse) const
+const Card *LongweiCard::validate(CardUseStruct &cardUse) const
 {
     cardUse.m_isOwnerUse = false;
     ServerPlayer *liushan = cardUse.from;
     Room *room = liushan->getRoom();
     liushan->broadcastSkillInvoke(this);
-    room->notifySkillInvoked(liushan, "huzhuVS");
+    room->notifySkillInvoked(liushan, "longweiVS");
     
     LogMessage log;
     log.from = liushan;
@@ -270,19 +270,19 @@ const Card *HuzhuCard::validate(CardUseStruct &cardUse) const
     room->sendLog(log);
     
     const Card *card = NULL;
-    ServerPlayer *zhaoyun = room->findPlayerBySkillName("huzhu");
-    card = room->askForCard(zhaoyun, user_string, "@huzhu-card:" + liushan->objectName(), QVariant(), Card::MethodResponse, liushan, false, QString(), true);
+    ServerPlayer *zhaoyun = room->findPlayerBySkillName("longwei");
+    card = room->askForCard(zhaoyun, user_string, "@longwei-card:" + liushan->objectName(), QVariant(), Card::MethodResponse, liushan, false, QString(), true);
 
     if (card) {
-        bool will_dis = room->askForSkillInvoke(zhaoyun, "huzhu_dis", "discard");
+        bool will_dis = room->askForSkillInvoke(zhaoyun, "longwei_dis", "discard");
         if (will_dis) {
             ServerPlayer *current = room->getCurrent();
-            int disc = room->askForCardChosen(zhaoyun, current, "he", "huzhu", false, Card::MethodDiscard);
+            int disc = room->askForCardChosen(zhaoyun, current, "he", "longwei", false, Card::MethodDiscard);
             room->throwCard(disc, current, zhaoyun);
         }
         return card;
     }
-    room->setPlayerFlag(liushan, "Global_huzhuFailed");
+    room->setPlayerFlag(liushan, "Global_longweiFailed");
     return NULL;
 }
 

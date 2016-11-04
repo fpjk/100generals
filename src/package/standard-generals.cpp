@@ -1150,10 +1150,10 @@ public:
     }
 };
 
-class Huzhu : public TriggerSkill
+class Longwei : public TriggerSkill
 {
 public:
-    Huzhu() : TriggerSkill("huzhu")
+    Longwei() : TriggerSkill("longwei")
     {
         events << CardAsked ;
     }
@@ -1170,27 +1170,27 @@ public:
             return false;
         QString pattern = data.toStringList().first();
         if ((pattern == "slash" || pattern == "jink") && room->askForSkillInvoke(player, objectName(), data)) {
-            const Card *card = room->askForCard(zhaoyun, pattern, "@huzhu-card:" + player->objectName(), QVariant(), Card::MethodResponse, player);
+            const Card *card = room->askForCard(zhaoyun, pattern, "@longwei-card:" + player->objectName(), QVariant(), Card::MethodResponse, player);
             if (card){
-                bool will_dis = room->askForSkillInvoke(zhaoyun, "huzhu_dis", "discard");
+                bool will_dis = room->askForSkillInvoke(zhaoyun, "longwei_dis", "discard");
                 if (will_dis) { 
                     ServerPlayer *current = room->getCurrent();
-                    int disc = room->askForCardChosen(zhaoyun, current, "he", "huzhu", false, Card::MethodDiscard);
+                    int disc = room->askForCardChosen(zhaoyun, current, "he", "longwei", false, Card::MethodDiscard);
                     room->throwCard(disc, current, zhaoyun);
                 }
                 room->provide(card);
                 return true;
             }
-            room->setPlayerFlag(player, "Global_huzhuFailed");
+            room->setPlayerFlag(player, "Global_longweiFailed");
         }
         return false;
     }
 };
 
-class HuzhuAttach : public TriggerSkill
+class LongweiAttach : public TriggerSkill
 {
 public:
-    HuzhuAttach() : TriggerSkill("#huzhu-attach")
+    LongweiAttach() : TriggerSkill("#longwei-attach")
     {
         events << GameStart << EventAcquireSkill << EventLoseSkill << Debut;
     }
@@ -1203,21 +1203,21 @@ public:
     bool trigger(TriggerEvent triggerEvent, Room *room, ServerPlayer *player, QVariant &data) const
     {
         if ((triggerEvent == GameStart && TriggerSkill::triggerable(player))
-            || (triggerEvent == EventAcquireSkill && data.toString() == "huzhu")) {
+            || (triggerEvent == EventAcquireSkill && data.toString() == "longwei")) {
             foreach (ServerPlayer *p, room->getOtherPlayers(player)) {
-                if (!p->hasSkill("huzhu_VS"))
-                    room->attachSkillToPlayer(p, "huzhu_VS");
+                if (!p->hasSkill("longwei_VS"))
+                    room->attachSkillToPlayer(p, "longwei_VS");
             }
-        } else if (triggerEvent == EventLoseSkill && data.toString() == "huzhu") {
+        } else if (triggerEvent == EventLoseSkill && data.toString() == "longwei") {
             foreach (ServerPlayer *p, room->getOtherPlayers(player)) {
-                if (p->hasSkill("huzhu_VS"))
-                    room->detachSkillFromPlayer(p, "huzhu_VS", true);
+                if (p->hasSkill("longwei_VS"))
+                    room->detachSkillFromPlayer(p, "longwei_VS", true);
             }
         } else if (triggerEvent == Debut) {
-            QList<ServerPlayer *> zhaoyuns = room->findPlayersBySkillName("huzhu");
+            QList<ServerPlayer *> zhaoyuns = room->findPlayersBySkillName("longwei");
             foreach (ServerPlayer *zhaoyun, zhaoyuns) {
-                if (player != zhaoyun && !player->hasSkill("huzhu-attach")) {
-                    room->attachSkillToPlayer(player, "huzhu-attach");
+                if (player != zhaoyun && !player->hasSkill("longwei-attach")) {
+                    room->attachSkillToPlayer(player, "longwei-attach");
                     break;
                 }
             }
@@ -1226,10 +1226,10 @@ public:
     }
 };
 
-class HuzhuViewAsSkill : public ZeroCardViewAsSkill
+class LongweiViewAsSkill : public ZeroCardViewAsSkill
 {
 public:
-    HuzhuViewAsSkill() : ZeroCardViewAsSkill("huzhu_VS")
+    LongweiViewAsSkill() : ZeroCardViewAsSkill("longwei_VS")
     {
         attached_lord_skill = true;
     }
@@ -1243,12 +1243,12 @@ public:
     {
         const Player *zhaoyun = NULL;
         foreach (const Player *p, player->getAliveSiblings()) {
-            if (p->hasSkill("huzhu") && p->inMyAttackRange(player)) {
+            if (p->hasSkill("longwei") && p->inMyAttackRange(player)) {
                 zhaoyun = p;
                 break;
             }
         }
-        if (zhaoyun == NULL || player->hasFlag("Global_huzhuFailed") || player->getPhase() != Player::NotActive) return false;
+        if (zhaoyun == NULL || player->hasFlag("Global_longweiFailed") || player->getPhase() != Player::NotActive) return false;
         if (pattern == "slash")
             return Sanguosha->currentRoomState()->getCurrentCardUseReason() == CardUseStruct::CARD_USE_REASON_RESPONSE_USE;
         else if (pattern == "peach")
@@ -1260,12 +1260,12 @@ public:
 
     const Card *viewAs() const
     {
-        HuzhuCard *huzhu_card = new HuzhuCard;
+        LongweiCard *longwei_card = new LongweiCard;
         QString pattern = Sanguosha->currentRoomState()->getCurrentCardUsePattern();
         if (pattern == "peach+analeptic" && Self->getMark("Global_PreventPeach") > 0)
             pattern = "analeptic";
-        huzhu_card->setUserString(pattern);
-        return huzhu_card;
+        longwei_card->setUserString(pattern);
+        return longwei_card;
     }
 };
 
@@ -3253,11 +3253,11 @@ void StandardPackage::addGenerals()
     zhugeliang->addSkill(new Kongcheng);
 
     General *zhaoyun = new General(this, "zhaoyun", "shu"); // SHU 005
-    zhaoyun->addSkill(new Huzhu);
-    zhaoyun->addSkill(new HuzhuAttach);
+    zhaoyun->addSkill(new Longwei);
+    zhaoyun->addSkill(new LongweiAttach);
     zhaoyun->addSkill(new Longhun);
     //zhaoyun->addSkill(new Yajiao);
-    related_skills.insertMulti("huzhu", "#huzhu-attach");
+    related_skills.insertMulti("longwei", "#longwei-attach");
 
     General *machao = new General(this, "machao", "shu"); // SHU 006
     machao->addSkill(new Mashu);
@@ -3360,7 +3360,7 @@ void StandardPackage::addGenerals()
     addMetaObject<RendeCard>();
     addMetaObject<JijiangCard>();
     addMetaObject<YijueCard>();
-    addMetaObject<HuzhuCard>();
+    addMetaObject<LongweiCard>();
     addMetaObject<JianyanCard>();
     addMetaObject<ZhihengCard>();
     addMetaObject<FenweiCard>();
@@ -3376,6 +3376,6 @@ void StandardPackage::addGenerals()
     addMetaObject<HuangtianCard>();
     addMetaObject<MizhaoCard>();
 
-    skills << new Xiaoxi << new HuangtianViewAsSkill << new NonCompulsoryInvalidity << new Jianyan << new HuzhuViewAsSkill;
+    skills << new Xiaoxi << new HuangtianViewAsSkill << new NonCompulsoryInvalidity << new Jianyan << new LongweiViewAsSkill;
 }
 

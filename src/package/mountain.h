@@ -18,12 +18,12 @@ public:
     void onEffect(const CardEffectStruct &effect) const;
 };
 
-class TiaoxinCard : public SkillCard
+class WujuCard : public SkillCard
 {
     Q_OBJECT
 
 public:
-    Q_INVOKABLE TiaoxinCard();
+    Q_INVOKABLE WujuCard();
 
     bool targetFilter(const QList<const Player *> &targets, const Player *to_select, const Player *Self) const;
     void onEffect(const CardEffectStruct &effect) const;
